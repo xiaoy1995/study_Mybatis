@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="author" elementFormDefault="qualified">
+    <xsd:element name="author">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="name" type="xsd:string"/>
+                <xsd:element name="age" type="xsd:integer"/>
+                <xsd:element name="gender">
+                    <xsd:simpleType>
+                        <xsd:restriction>
+                            <xsd:enumeration value="男"/>
+                            <xsd:enumeration value="女"/>
+                        </xsd:restriction>
+                    </xsd:simpleType>
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

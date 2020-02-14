@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<mapper xmlns="http://www.aiduoduo.site/schema/mybatis-mapper" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.aiduoduo.site/schema/mybatis-mapper  site/aiduoduo/mybatis/builder/xml/xsd/mybatis-mapper.xsd"
+        namespace="site.aiduoduo.user">
+
+
+    <select id="selectAll" resultType="xxx" parameterType="xxx" statmentType="prepared">
+        select * from user
+    </select>
+
+    <select id="selectByPhone" resultType="xxx" parameterType="xxx" statmentType="prepared">
+        select * from user
+        <where>
+            <if test="phone != null">
+                and phone = #{phone}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insert" parameterType="xx" resultType="sss" statmentType="prepared">
+        <if test="">
+            insert into user(name,gender,phone,address) values(#{name},#{gender},#{phone},#{address});
+        </if>
+    </insert>
+</mapper>

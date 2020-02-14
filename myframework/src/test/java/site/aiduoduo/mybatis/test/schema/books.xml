@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<books xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="books.xsd"
+           xmlns="www.book.com" xmlns:a="/Users/yangtianhao/develop/gitProjects/study_mybatis/myframework/src/test/java/site/aiduoduo/mybatis/test/schema/author.xsd">
+    <book>
+        <name>java编程</name>
+        <price>11.22</price>
+        <a:author>
+            <a:name>aa</a:name>
+            <a:age>11</a:age>
+            <a:gender>男</a:gender>
+        </a:author>
+    </book>
+<!--    <book>-->
+<!--        <name>HeadFirst设计模式</name>-->
+<!--        <price>44.22</price>-->
+<!--    </book>-->
+</books>

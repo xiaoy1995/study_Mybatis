@@ -1,0 +1,71 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.aiduoduo.site/schema/mybatis"
+            xmlns="http://www.aiduoduo.site/schema/mybatis" elementFormDefault="qualified">
+
+    <xsd:simpleType name="supportDataSource">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="druid"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="property">
+        <xsd:attribute name="name" use="required">
+            <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="driverClassName"/>
+                    <xsd:enumeration value="url"/>
+                    <xsd:enumeration value="username"/>
+                    <xsd:enumeration value="password"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+        </xsd:attribute>
+        <xsd:attribute name="value" type="xsd:string" use="required"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="datasource">
+        <xsd:sequence>
+            <xsd:element name="property" type="property" minOccurs="0" maxOccurs="unbounded"></xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="type" use="required" type="supportDataSource"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="enviroment">
+        <xsd:sequence>
+            <xsd:element name="datasource" type="datasource"></xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="id" type="xsd:string" use="required" default="dev"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="enviroments">
+        <xsd:sequence>
+            <xsd:element name="enviroment" type="enviroment" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="default" type="xsd:string" use="required" default="dev"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="mapper">
+        <xsd:attribute name="resource" type="xsd:string"/>
+        <xsd:attribute name="url" type="xsd:string"/>
+        <xsd:attribute name="class" type="xsd:string"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="mappers">
+        <xsd:sequence>
+            <xsd:element name="mapper" type="mapper" minOccurs="1" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="properties">
+        <xsd:attribute name="resource" type="xsd:string"/>
+    </xsd:complexType>
+
+    <xsd:element name="configuration">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="properties" type="properties" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="enviroments" type="enviroments"/>
+                <xsd:element name="mappers" type="mappers"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+</xsd:schema>

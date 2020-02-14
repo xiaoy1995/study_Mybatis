@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration xmlns="http://www.aiduoduo.site/schema/mybatis" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://www.aiduoduo.site/schema/mybatis site/aiduoduo/mybatis/builder/xml/xsd/mybatis-config.xsd">
+
+    <properties resource="datasource.properties"/>
+    <enviroments default="dev">
+        <enviroment id="dev">
+            <datasource type="druid">
+                <property name="driverClassName" value="${db.driver}"/>
+                <property name="url" value="${db.url}"/>
+                <property name="username" value="${db.username}"/>
+                <property name="password" value="${db.password}"/>
+            </datasource>
+        </enviroment>
+    </enviroments>
+    <mappers>
+        <mapper resource="mybatis-mapper.xml"/>
+    </mappers>
+
+</configuration>

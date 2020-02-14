@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="www.book.com" elementFormDefault="qualified" xmlns:a="/Users/yangtianhao/develop/gitProjects/study_mybatis/myframework/src/test/java/site/aiduoduo/mybatis/test/schema/author.xsd">
+    <xsd:import namespace="/Users/yangtianhao/develop/gitProjects/study_mybatis/myframework/src/test/java/site/aiduoduo/mybatis/test/schema/author.xsd" schemaLocation="author.xsd"/>
+
+    <xsd:element name="books">
+        <xsd:complexType>
+            <xsd:choice minOccurs="0" maxOccurs="unbounded">
+                <xsd:element name="book" >
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="name" type="xsd:string"></xsd:element>
+                            <xsd:element name="price" type="xsd:decimal"></xsd:element>
+                            <xsd:element ref="a:author"></xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:choice>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

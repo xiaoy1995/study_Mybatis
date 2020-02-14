@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+手写mybatis框架，DTD约束
+-->
+
+<!ELEMENT configuration ( environments?, mappers?)>
+
+<!ELEMENT environments (environment+)>
+<!ATTLIST environments default CDATA #REQUIRED>
+
+<!ELEMENT environment (datasource) >
+<!ATTLIST environment id CDATA>
+
+<!ELEMENT datasource (property*)>
+<!ATTLIST datasource type CDATA>
+
+<!ELEMENT property EMPTY>
+<!ATTLIST property
+        name CDATA #REQUIRED
+        value CDATA #REQUIRED>
+
+<!ELEMENT mappers (mapper*)>
+<!ELEMENT mapper EMPTY>
+<!ATTLIST mapper resource CDATA>

@@ -1,0 +1,40 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://www.aiduoduo.site/schema/mybatis-mapper"
+            xmlns="http://www.aiduoduo.site/schema/mybatis-mapper" elementFormDefault="qualified">
+    <xsd:element name="mapper" type="mapper"/>
+
+    <xsd:complexType name="mapper">
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+            <xsd:element name="select" type="statmentType"/>
+            <xsd:element name="insert" type="statmentType"/>
+        </xsd:choice>
+        <xsd:attribute name="namespace" type="xsd:string" use="required"/>
+        <xsd:anyAttribute/>
+    </xsd:complexType>
+
+    <xsd:complexType name="statmentType" mixed="true">
+        <xsd:group ref="dynamicSql" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:attribute name="id" type="xsd:string" use="required"/>
+        <xsd:attribute name="parameterType" type="xsd:string"/>
+        <xsd:attribute name="resultType" type="xsd:string"/>
+        <xsd:attribute name="statmentType" type="xsd:string" default="prepared"/>
+    </xsd:complexType>
+
+
+    <xsd:group name="dynamicSql">
+        <xsd:choice>
+            <xsd:element name="if" type="if"/>
+            <xsd:element name="where" type="where"/>
+        </xsd:choice>
+    </xsd:group>
+
+    <xsd:complexType name="if" mixed="true">
+        <xsd:group ref="dynamicSql" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:attribute name="test" type="xsd:string" use="required"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="where" mixed="true">
+        <xsd:group ref="dynamicSql" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:complexType>
+
+</xsd:schema>
