@@ -1,7 +1,6 @@
 package site.aiduoduo.mybatis.mapping.sqlnode;
 
 import site.aiduoduo.mybatis.mapping.DynamicContext;
-import site.aiduoduo.mybatis.mapping.SqlNode;
 import site.aiduoduo.mybatis.util.OgnlUtils;
 
 /**

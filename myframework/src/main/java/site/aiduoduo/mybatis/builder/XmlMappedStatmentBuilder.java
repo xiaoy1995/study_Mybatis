@@ -3,7 +3,7 @@ package site.aiduoduo.mybatis.builder;
 import org.dom4j.Element;
 
 import site.aiduoduo.mybatis.mapping.MappedStatment;
-import site.aiduoduo.mybatis.mapping.SqlSource;
+import site.aiduoduo.mybatis.mapping.sqlsource.SqlSource;
 
 /**
  * @Author yangtianhao

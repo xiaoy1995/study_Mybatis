@@ -1,5 +1,7 @@
 package site.aiduoduo.mybatis.mapping;
 
+import site.aiduoduo.mybatis.mapping.sqlsource.SqlSource;
+
 /**
  * @Author yangtianhao
  * @Date 2020/2/7 8:16 下午

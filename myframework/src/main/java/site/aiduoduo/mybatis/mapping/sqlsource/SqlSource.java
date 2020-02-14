@@ -1,4 +1,6 @@
-package site.aiduoduo.mybatis.mapping;
+package site.aiduoduo.mybatis.mapping.sqlsource;
+
+import site.aiduoduo.mybatis.mapping.BoundSql;
 
 /**
  * @Author yangtianhao

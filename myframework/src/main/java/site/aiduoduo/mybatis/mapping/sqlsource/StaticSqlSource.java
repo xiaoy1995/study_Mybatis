@@ -2,7 +2,6 @@ package site.aiduoduo.mybatis.mapping.sqlsource;
 
 import site.aiduoduo.mybatis.mapping.BoundSql;
 import site.aiduoduo.mybatis.mapping.ParameterMapping;
-import site.aiduoduo.mybatis.mapping.SqlSource;
 
 import java.util.List;
 
