@@ -33,7 +33,7 @@ public class XMLScriptBuilder {
         this.statmentELement = statmentELement;
     }
 
-    public SqlSource parse() {
+    public SqlSource parseScriptNode() {
         List<SqlNode> sqlNodes = parseSqlNodes(statmentELement);
         SqlSource sqlSource = null;
         if (isDynamic) {

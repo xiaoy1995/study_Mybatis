@@ -3,17 +3,23 @@ package site.aiduoduo.mybatis.test;
 import org.apache.commons.collections4.CollectionUtils;
 import org.junit.Test;
 import site.aiduoduo.mybatis.builder.XmlConfigurationBuilder;
+import site.aiduoduo.mybatis.io.Resources;
 import site.aiduoduo.mybatis.mapping.BoundSql;
 import site.aiduoduo.mybatis.mapping.Configuration;
-import site.aiduoduo.mybatis.mapping.MappedStatment;
+import site.aiduoduo.mybatis.mapping.MappedStatement;
 import site.aiduoduo.mybatis.mapping.ParameterMapping;
 import site.aiduoduo.mybatis.pojo.User;
+import site.aiduoduo.mybatis.session.SqlSession;
+import site.aiduoduo.mybatis.session.SqlSessionFactory;
+import site.aiduoduo.mybatis.session.SqlSessionFactoryBuilder;
 
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * @Author yangtianhao
@@ -21,6 +27,29 @@ import java.sql.SQLException;
  * @Version 1.0
  */
 public class FrameworkTest {
+
+    @Test
+    public void test2() throws Exception {
+        InputStream resourceAsStream = Resources.getResourceAsStream("mybatis-config-schema.xml");
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(resourceAsStream);
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        User user1 = new User();
+        user1.setPhone("18115610044");
+        User user = sqlSession.selectOne("site.aiduoduo.user.selectByPhone", user1);
+        System.out.println(user);
+
+        User user2 = new User();
+        user2.setName("关羽");
+        user2.setGender(1);
+        user2.setAddress("山西运城");
+        user2.setPhone("18115612524");
+        int insert = sqlSession.insert("site.aiduoduo.user.insert", user2);
+        System.out.println("insert " + insert);
+
+        List<User> list = sqlSession.selectList("site.aiduoduo.user.selectAll", null);
+        list.forEach(u -> System.out.println(u));
+    }
+
     @Test
     public void test() throws Exception {
         Connection conn = null;
@@ -35,13 +64,13 @@ public class FrameworkTest {
             conn = configuration.getEnvironment().getDataSource().getConnection();
 
             // 3 获取sql语句
-            MappedStatment mappedStatment = configuration.getMappedStatment("site.aiduoduo.user.selectByPhone");
+            MappedStatement mappedStatement = configuration.getMappedStatment("site.aiduoduo.user.selectByPhone");
             User user = new User();
             user.setPhone("18115610044");
-            BoundSql boundSql = mappedStatment.getSqlSource().getBoundSql(user);
+            BoundSql boundSql = mappedStatement.getSqlSource().getBoundSql(user);
             String sql = boundSql.getSql();
             // 4 获取预处理 statement
-            if ("prepared".equals(mappedStatment.getStatementType())) {
+            if ("prepared".equals(mappedStatement.getStatementType())) {
                 stmt = conn.prepareStatement(sql);
             }
             // 5 设置参数，序号从1开始

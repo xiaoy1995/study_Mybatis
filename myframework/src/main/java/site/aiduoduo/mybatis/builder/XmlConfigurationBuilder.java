@@ -4,6 +4,7 @@ import com.alibaba.druid.pool.DruidDataSourceFactory;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Element;
+import site.aiduoduo.mybatis.io.Resources;
 import site.aiduoduo.mybatis.mapping.Configuration;
 import site.aiduoduo.mybatis.mapping.Environment;
 import site.aiduoduo.mybatis.parsing.GenericTokenParser;
@@ -42,10 +43,10 @@ public class XmlConfigurationBuilder {
 
     private void parseMappers(Element mappersElement) {
         List<Element> mapperList = mappersElement.elements("mapper");
-        if(CollectionUtils.isNotEmpty(mapperList)){
+        if (CollectionUtils.isNotEmpty(mapperList)) {
             for (Element element : mapperList) {
                 String resource = element.attributeValue("resource");
-                InputStream resourceAsStream = this.getClass().getClassLoader().getResourceAsStream(resource);
+                InputStream resourceAsStream = Resources.getResourceAsStream(resource);
                 XmlMapperBuilder xmlMapperBuilder = new XmlMapperBuilder(configuration, resourceAsStream);
                 xmlMapperBuilder.parse();
             }
@@ -84,7 +85,7 @@ public class XmlConfigurationBuilder {
         String resource = propertiesElement.attributeValue("resource");
 
         if (StringUtils.isNotBlank(resource)) {
-            InputStream resourceAsStream = this.getClass().getClassLoader().getResourceAsStream(resource);
+            InputStream resourceAsStream = Resources.getResourceAsStream(resource);
             Properties properties = new Properties();
             try {
                 properties.load(resourceAsStream);

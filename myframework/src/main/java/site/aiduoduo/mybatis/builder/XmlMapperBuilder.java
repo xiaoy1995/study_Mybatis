@@ -31,8 +31,8 @@ public class XmlMapperBuilder {
     private void parseMappedStatment(List<Element> mappedStatmentElementList) {
         if (CollectionUtils.isNotEmpty(mappedStatmentElementList)) {
             for (Element element : mappedStatmentElementList) {
-                XmlMappedStatmentBuilder xmlMappedStatmentBuilder = new XmlMappedStatmentBuilder(element,namespace);
-                configuration.addMappedStatment(xmlMappedStatmentBuilder.parse());
+                XMLStatementBuilder XMLStatementBuilder = new XMLStatementBuilder(element,namespace);
+                configuration.addMappedStatment(XMLStatementBuilder.parseStatementNode());
             }
         }
     }
