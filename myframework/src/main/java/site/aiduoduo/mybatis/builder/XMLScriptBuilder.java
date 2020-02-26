@@ -4,6 +4,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Element;
 import org.dom4j.Node;
+import site.aiduoduo.mybatis.mapping.Configuration;
 import site.aiduoduo.mybatis.mapping.sqlnode.SqlNode;
 import site.aiduoduo.mybatis.mapping.sqlsource.SqlSource;
 import site.aiduoduo.mybatis.mapping.sqlnode.IfSqlNode;
@@ -23,23 +24,28 @@ import java.util.List;
  * @Version 1.0 解析select/insert/update/delete标签
  */
 public class XMLScriptBuilder {
+    private Configuration configuration;
     private Element statmentELement;
+    private Class<?> parameterType;
     /**
      * 如果包含${}或者有动态标签，就是动态的SqlSource
      */
     private boolean isDynamic;
 
-    public XMLScriptBuilder(Element statmentELement) {
+    public XMLScriptBuilder(Element statmentELement, Configuration configuration, Class<?> parameterType) {
         this.statmentELement = statmentELement;
+        this.configuration = configuration;
+        this.parameterType = parameterType;
+
     }
 
     public SqlSource parseScriptNode() {
         List<SqlNode> sqlNodes = parseSqlNodes(statmentELement);
         SqlSource sqlSource = null;
         if (isDynamic) {
-            sqlSource = new DynamicSqlSource(new MixedSqlNode(sqlNodes));
+            sqlSource = new DynamicSqlSource(configuration, new MixedSqlNode(sqlNodes));
         } else {
-            sqlSource = new RawSqlSource(new MixedSqlNode(sqlNodes));
+            sqlSource = new RawSqlSource(configuration, new MixedSqlNode(sqlNodes), parameterType);
         }
         return sqlSource;
     }

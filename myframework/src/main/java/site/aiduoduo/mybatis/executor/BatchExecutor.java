@@ -1,5 +1,6 @@
 package site.aiduoduo.mybatis.executor;
 
+import site.aiduoduo.mybatis.mapping.BoundSql;
 import site.aiduoduo.mybatis.mapping.Configuration;
 import site.aiduoduo.mybatis.mapping.MappedStatement;
 
@@ -26,6 +27,11 @@ public class BatchExecutor implements Executor {
 
     @Override
     public <E> List<E> query(MappedStatement ms, Object parameter) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public <E> List<E> query(MappedStatement ms, Object parameter, BoundSql boundSql) throws SQLException {
         return null;
     }
 }

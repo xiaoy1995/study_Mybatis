@@ -2,8 +2,11 @@ package site.aiduoduo.mybatis.executor.parameter;
 
 import org.apache.commons.collections4.CollectionUtils;
 import site.aiduoduo.mybatis.mapping.BoundSql;
+import site.aiduoduo.mybatis.mapping.Configuration;
 import site.aiduoduo.mybatis.mapping.MappedStatement;
 import site.aiduoduo.mybatis.mapping.ParameterMapping;
+import site.aiduoduo.mybatis.type.JdbcType;
+import site.aiduoduo.mybatis.type.TypeHandler;
 import site.aiduoduo.mybatis.util.SimpleTypeRegistry;
 
 import java.lang.reflect.Field;
@@ -20,11 +23,13 @@ public class DefaultParameterHandler implements ParameterHandle {
     private BoundSql boundSql;
     private Object parameterObject;
     private MappedStatement mappedStatement;
+    private Configuration configuration;
 
     public DefaultParameterHandler(BoundSql boundSql, Object parameterObject, MappedStatement mappedStatement) {
         this.boundSql = boundSql;
         this.parameterObject = parameterObject;
         this.mappedStatement = mappedStatement;
+        this.configuration = mappedStatement.getConfiguration();
     }
 
     @Override
@@ -34,7 +39,7 @@ public class DefaultParameterHandler implements ParameterHandle {
         if (CollectionUtils.isNotEmpty(parameterMappings)) {
             for (int i = 0; i < parameterMappings.size(); i++) {
                 ParameterMapping parameterMapping = parameterMappings.get(i);
-                String name = parameterMapping.getName();
+                String propertyName = parameterMapping.getProperty();
                 Object value = null;
                 if (parameterObject == null) {
                     value = null;
@@ -42,14 +47,21 @@ public class DefaultParameterHandler implements ParameterHandle {
                     value = parameterObject;
                 } else {
                     try {
-                        Field field = parameterObject.getClass().getDeclaredField(name);
+                        // 写的比较简单，直接用反射取值，只支持一级
+                        Field field = parameterObject.getClass().getDeclaredField(propertyName);
                         field.setAccessible(true);
                         value = field.get(parameterObject);
                     } catch (NoSuchFieldException | IllegalAccessException e) {
                         e.printStackTrace();
                     }
                 }
-                ps.setObject(i+1, value);
+                TypeHandler typeHandler = parameterMapping.getTypeHandler();
+                JdbcType jdbcType = parameterMapping.getJdbcType();
+                if (value == null && jdbcType == null) {
+                    // 不同类型的set方法不同，所以委派给子类的setParameter方法
+                    jdbcType = configuration.getJdbcTypeForNull();
+                }
+                typeHandler.setParameter(ps, i + 1, value, jdbcType);
             }
         }
     }

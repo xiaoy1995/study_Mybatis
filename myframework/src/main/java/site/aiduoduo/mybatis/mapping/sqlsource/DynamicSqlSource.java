@@ -1,6 +1,7 @@
 package site.aiduoduo.mybatis.mapping.sqlsource;
 
 import site.aiduoduo.mybatis.mapping.BoundSql;
+import site.aiduoduo.mybatis.mapping.Configuration;
 import site.aiduoduo.mybatis.mapping.DynamicContext;
 import site.aiduoduo.mybatis.mapping.sqlnode.SqlNode;
 import site.aiduoduo.mybatis.parsing.SqlSourceParser;
@@ -12,9 +13,11 @@ import site.aiduoduo.mybatis.parsing.SqlSourceParser;
  */
 public class DynamicSqlSource implements SqlSource {
     private SqlNode contents;
+    private Configuration configuration;
 
-    public DynamicSqlSource(SqlNode contents) {
+    public DynamicSqlSource(Configuration configuration, SqlNode contents) {
         this.contents = contents;
+        this.configuration = configuration;
     }
 
     @Override
@@ -23,8 +26,9 @@ public class DynamicSqlSource implements SqlSource {
         contents.apply(dynamicContext);
         String sql = dynamicContext.getSql().toString();
 
-        SqlSourceParser sqlSourceParser = new SqlSourceParser();
-        SqlSource parse = sqlSourceParser.parse(sql);
+        Class<?> parameterType = param == null ? Object.class : param.getClass();
+        SqlSourceParser sqlSourceParser = new SqlSourceParser(configuration);
+        SqlSource parse = sqlSourceParser.parse(sql, parameterType);
         return parse.getBoundSql(param);
     }
 }

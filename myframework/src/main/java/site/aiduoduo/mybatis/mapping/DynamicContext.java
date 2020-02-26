@@ -9,7 +9,7 @@ import java.util.Map;
  * @Version 1.0
  */
 public class DynamicContext {
-    private StringBuffer sql = new StringBuffer();
+    private StringBuilder sql = new StringBuilder();
     private Map<String, Object> params = new HashMap<>();
 
     public DynamicContext(Object param) {
@@ -17,11 +17,11 @@ public class DynamicContext {
 
     }
 
-    public StringBuffer getSql() {
+    public StringBuilder getSql() {
         return sql;
     }
 
-    public void setSql(StringBuffer sql) {
+    public void setSql(StringBuilder sql) {
         this.sql = sql;
     }
 

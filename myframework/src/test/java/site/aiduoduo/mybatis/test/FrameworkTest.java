@@ -19,7 +19,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 /**
  * @Author yangtianhao
@@ -38,16 +37,16 @@ public class FrameworkTest {
         User user = sqlSession.selectOne("site.aiduoduo.user.selectByPhone", user1);
         System.out.println(user);
 
-        User user2 = new User();
-        user2.setName("关羽");
-        user2.setGender(1);
-        user2.setAddress("山西运城");
-        user2.setPhone("18115612524");
-        int insert = sqlSession.insert("site.aiduoduo.user.insert", user2);
-        System.out.println("insert " + insert);
-
-        List<User> list = sqlSession.selectList("site.aiduoduo.user.selectAll", null);
-        list.forEach(u -> System.out.println(u));
+//        User user2 = new User();
+//        user2.setName("关羽");
+//        user2.setGender(1);
+//        user2.setAddress("山西运城");
+//        user2.setPhone("18115612524");
+//        int insert = sqlSession.insert("site.aiduoduo.user.insert", user2);
+//        System.out.println("insert " + insert);
+//
+//        List<User> list = sqlSession.selectList("site.aiduoduo.user.selectAll", null);
+//        list.forEach(u -> System.out.println(u));
     }
 
     @Test
@@ -77,7 +76,7 @@ public class FrameworkTest {
             if (CollectionUtils.isNotEmpty(boundSql.getParameterMappings())) {
                 for (int i = 0; i < boundSql.getParameterMappings().size(); i++) {
                     ParameterMapping parameterMapping = boundSql.getParameterMappings().get(i);
-                    String name = parameterMapping.getName();
+                    String name = parameterMapping.getProperty();
                     Field field = user.getClass().getDeclaredField(name);
                     field.setAccessible(true);
                     Object o = field.get(user);

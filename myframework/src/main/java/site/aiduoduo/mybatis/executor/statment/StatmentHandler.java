@@ -20,6 +20,6 @@ public interface StatmentHandler {
     // update
     int update(Statement statement) throws SQLException;
 
-    // select-->结果给ResultHandler
+    // select
     <E> List<E> query(Statement statement) throws SQLException;
 }

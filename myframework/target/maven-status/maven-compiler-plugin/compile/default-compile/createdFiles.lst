@@ -1,0 +1,10 @@
+site/aiduoduo/mybatis/mapping/ResultMapping.class
+site/aiduoduo/mybatis/mapping/ResultMap.class
+site/aiduoduo/mybatis/type/ObjectTypeHandler.class
+site/aiduoduo/mybatis/type/TypeHandlerRegistry.class
+site/aiduoduo/mybatis/type/DateTypeHandler.class
+site/aiduoduo/mybatis/type/JdbcType.class
+site/aiduoduo/mybatis/type/TypeHandler.class
+site/aiduoduo/mybatis/type/BaseTypeHandler.class
+site/aiduoduo/mybatis/type/IntegerTypeHandler.class
+site/aiduoduo/mybatis/type/StringTypeHandler.class

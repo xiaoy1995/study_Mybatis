@@ -13,14 +13,18 @@ public class MappedStatement {
     private final String resultType;
     private final String statementType;
     private final SqlSource sqlSource;
+    private final Configuration configuration;
+    private final ResultMap resultMap;
 
     public MappedStatement(String id, String parameterType, String resultType, SqlSource sqlSource,
-        String statementType) {
+        String statementType, Configuration configuration, ResultMap resultMap) {
         this.id = id;
         this.parameterType = parameterType;
         this.resultType = resultType;
         this.sqlSource = sqlSource;
         this.statementType = statementType;
+        this.configuration = configuration;
+        this.resultMap = resultMap;
     }
 
     public String getId() {
@@ -45,5 +49,13 @@ public class MappedStatement {
 
     public BoundSql getBoundSql(Object param) {
         return this.sqlSource.getBoundSql(param);
+    }
+
+    public Configuration getConfiguration() {
+        return configuration;
+    }
+
+    public ResultMap getResultMap() {
+        return resultMap;
     }
 }

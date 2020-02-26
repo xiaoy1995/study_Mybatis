@@ -33,4 +33,13 @@ public class SimpleExecutor extends BaseExecutor {
         }
         return null;
     }
+
+    @Override
+    protected int doUpdate(MappedStatement ms, Object parameter) throws SQLException {
+        BoundSql boundSql = ms.getBoundSql(parameter);
+        StatmentHandler statmentHandler = configuration.newStatementHandler(ms, parameter, boundSql);
+        Statement statement = statmentHandler.prepare(connection);
+        statmentHandler.parameterize(statement);
+        return statmentHandler.update(statement);
+    }
 }

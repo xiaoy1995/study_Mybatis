@@ -4,9 +4,15 @@ import site.aiduoduo.mybatis.executor.BatchExecutor;
 import site.aiduoduo.mybatis.executor.CatchingExecutor;
 import site.aiduoduo.mybatis.executor.Executor;
 import site.aiduoduo.mybatis.executor.SimpleExecutor;
+import site.aiduoduo.mybatis.executor.parameter.DefaultParameterHandler;
+import site.aiduoduo.mybatis.executor.parameter.ParameterHandle;
+import site.aiduoduo.mybatis.executor.resultset.DefaultResultSetHandler;
+import site.aiduoduo.mybatis.executor.resultset.ResultSetHandler;
 import site.aiduoduo.mybatis.executor.statment.PreparedStatementHandler;
 import site.aiduoduo.mybatis.executor.statment.StatmentHandler;
 import site.aiduoduo.mybatis.session.ExecutorType;
+import site.aiduoduo.mybatis.type.JdbcType;
+import site.aiduoduo.mybatis.type.TypeHandlerRegistry;
 
 import java.sql.Connection;
 import java.util.HashMap;
@@ -20,10 +26,12 @@ import java.util.Properties;
  */
 public class Configuration {
     protected ExecutorType defaultExecutorType = ExecutorType.SIMPLE;
+    protected JdbcType jdbcTypeForNull = JdbcType.OTHER;
     protected boolean cacheEnabled = true;
     private Environment environment;
     private Properties properties;
-
+    // 类型处理器注册机
+    protected final TypeHandlerRegistry typeHandlerRegistry = new TypeHandlerRegistry();
     private Map<String, MappedStatement> mappedStatmentMap = new HashMap<>();
 
     public Environment getEnvironment() {
@@ -79,5 +87,22 @@ public class Configuration {
 
         }
         return statmentHandler;
+    }
+
+    public ParameterHandle newParameterHandler(MappedStatement mappedStatement, Object parameterObject,
+        BoundSql boundSql) {
+        return new DefaultParameterHandler(boundSql, parameterObject, mappedStatement);
+    }
+
+    public ResultSetHandler newResultSetHandler(MappedStatement mappedStatement) {
+        return new DefaultResultSetHandler(mappedStatement);
+    }
+
+    public JdbcType getJdbcTypeForNull() {
+        return jdbcTypeForNull;
+    }
+
+    public TypeHandlerRegistry getTypeHandlerRegistry() {
+        return typeHandlerRegistry;
     }
 }

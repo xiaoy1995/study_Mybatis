@@ -1,10 +1,9 @@
 package site.aiduoduo.mybatis.executor.statment;
 
-import site.aiduoduo.mybatis.executor.parameter.DefaultParameterHandler;
 import site.aiduoduo.mybatis.executor.parameter.ParameterHandle;
-import site.aiduoduo.mybatis.executor.resultset.DefaultResultSetHandler;
 import site.aiduoduo.mybatis.executor.resultset.ResultSetHandler;
 import site.aiduoduo.mybatis.mapping.BoundSql;
+import site.aiduoduo.mybatis.mapping.Configuration;
 import site.aiduoduo.mybatis.mapping.MappedStatement;
 
 import java.sql.Connection;
@@ -23,11 +22,13 @@ public class PreparedStatementHandler implements StatmentHandler {
     private BoundSql boundSql;
     private ParameterHandle parameterHandle;
     private ResultSetHandler resultSetHandler;
+    private Configuration configuration;
 
     public PreparedStatementHandler(BoundSql boundSql, Object parameterObject, MappedStatement mappedStatement) {
         this.boundSql = boundSql;
-        this.parameterHandle = new DefaultParameterHandler(boundSql, parameterObject, mappedStatement);
-        this.resultSetHandler = new DefaultResultSetHandler(mappedStatement);
+        this.configuration = mappedStatement.getConfiguration();
+        this.parameterHandle = configuration.newParameterHandler(mappedStatement, parameterObject, boundSql);
+        this.resultSetHandler = configuration.newResultSetHandler(mappedStatement);
     }
 
     @Override

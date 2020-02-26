@@ -1,5 +1,6 @@
 package site.aiduoduo.mybatis.executor;
 
+import site.aiduoduo.mybatis.mapping.BoundSql;
 import site.aiduoduo.mybatis.mapping.MappedStatement;
 
 import java.sql.SQLException;
@@ -24,6 +25,13 @@ public class CatchingExecutor implements Executor {
 
     @Override
     public <E> List<E> query(MappedStatement ms, Object parameter) throws SQLException {
-        return delegate.query(ms, parameter);
+        BoundSql boundSql = ms.getBoundSql(parameter);
+        return this.query(ms, parameter, boundSql);
+    }
+
+    @Override
+    public <E> List<E> query(MappedStatement ms, Object parameter, BoundSql boundSql) throws SQLException {
+        // 二级缓存 TODO
+        return delegate.query(ms, parameter, boundSql);
     }
 }
