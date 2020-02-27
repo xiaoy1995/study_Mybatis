@@ -1,8 +1,6 @@
 package site.aiduoduo.mybatis.type;
 
 import java.lang.reflect.Type;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.EnumMap;
 import java.util.HashMap;
@@ -46,24 +44,8 @@ public final class TypeHandlerRegistry {
 
     }
 
-    public boolean hasTypeHandler(Class<?> javaType) {
-        return hasTypeHandler(javaType, null);
-    }
-
-    public boolean hasTypeHandler(Class<?> javaType, JdbcType jdbcType) {
-        return javaType != null && getTypeHandler((Type)javaType, jdbcType) != null;
-    }
-
-    public TypeHandler<?> getMappingTypeHandler(Class<? extends TypeHandler<?>> handlerType) {
-        return ALL_TYPE_HANDLERS_MAP.get(handlerType);
-    }
-
     public <T> TypeHandler<T> getTypeHandler(Class<T> type) {
         return getTypeHandler((Type)type, null);
-    }
-
-    public TypeHandler<?> getTypeHandler(JdbcType jdbcType) {
-        return JDBC_TYPE_HANDLER_MAP.get(jdbcType);
     }
 
     public <T> TypeHandler<T> getTypeHandler(Class<T> type, JdbcType jdbcType) {
@@ -115,13 +97,6 @@ public final class TypeHandlerRegistry {
             map.put(jdbcType, handler);
         }
         ALL_TYPE_HANDLERS_MAP.put(handler.getClass(), handler);
-    }
-
-    /**
-     * @since 3.2.2
-     */
-    public Collection<TypeHandler<?>> getTypeHandlers() {
-        return Collections.unmodifiableCollection(ALL_TYPE_HANDLERS_MAP.values());
     }
 
 }
